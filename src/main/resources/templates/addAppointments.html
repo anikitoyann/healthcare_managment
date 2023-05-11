@@ -6,7 +6,7 @@
 </head>
 <body>
 <form action="/appointments/add" method="post">
-    DateTime <input type="date" name="dateTime" ><br>
+    DateTime <input type="datetime-local" name="dateTime" ><br>
     <select name="doctorId">
     <option th:each="doctor : ${doctors}"
             th:value="${doctor.getId()}"

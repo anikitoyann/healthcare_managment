@@ -41,14 +41,14 @@ public class AppointmentController {
     }
 
     @PostMapping("/add")
-    public String itemsAdd(@ModelAttribute Appointment appointment){
+    public String AppointmentsAdd(@ModelAttribute Appointment appointment){
 
         appointmentRepository.save(appointment);
         return "redirect:/appointments";
     }
 
     @GetMapping("/remove")
-    public String removeDoctors(@RequestParam("id") int id) {
+    public String removeAppointments(@RequestParam("id") int id) {
         appointmentRepository.deleteById(id);
         return "redirect:/appointments";
     }
