@@ -19,7 +19,7 @@
     <td th:text="${appointment.id}"></td>
     <td th:text="${appointment.doctor}"></td>
     <td th:text="${appointment.patient}"></td>
-    <td th:text="${#dates.format(appointment.dateTime, 'dd/MM/yyyy')}"></td>
+    <td th:text="${#dates.format(appointment.dateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
     <td><a th:href="@{/appointments/remove(id=${appointment.id})}">Remove</a></td>
   </tr>
 </table>

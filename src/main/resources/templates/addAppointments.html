@@ -6,7 +6,7 @@
 </head>
 <body>
 <form action="/appointments/add" method="post">
-    DateOfBirthday <input type="date" name="dateOfBirthday"><br>
+    DateTime <input type="date" name="dateOfBirthday" ><br>
     <select name="doctorId">
     <option th:each="doctor : ${doctors}"
             th:value="${doctor.id}"
