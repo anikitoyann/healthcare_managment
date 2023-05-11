@@ -7,13 +7,13 @@
 <body>
 <form action="/appointments/add" method="post">
     DateTime <input type="datetime-local" name="dateTime" ><br>
-    <select name="doctorId">
+    <select name="doctor.id">
     <option th:each="doctor : ${doctors}"
-            th:value="${doctor.getId()}"
+            th:value="${doctor.id}"
             th:text="${doctor.name + ' ' + doctor.surname}">
     </option>
     </select>
-    <select name="patientId">
+    <select name="patient.id">
     <option th:each="patient : ${patients}"
             th:value="${patient.id}"
             th:text="${patient.name + ' ' + patient.surname}">
