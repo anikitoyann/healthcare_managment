@@ -9,7 +9,7 @@
     DateTime <input type="date" name="dateTime" ><br>
     <select name="doctorId">
     <option th:each="doctor : ${doctors}"
-            th:value="${doctor.id}"
+            th:value="${doctor.getId()}"
             th:text="${doctor.name + ' ' + doctor.surname}">
     </option>
     </select>
