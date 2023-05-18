@@ -15,9 +15,11 @@ public class Appointment {
     private int id;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateTime;
-   @ManyToOne
+    @ManyToOne
     private Patient patient;
-  @ManyToOne
+    @ManyToOne
     private Doctor doctor;
+    @ManyToOne
+    private User user;
 
 }

@@ -6,13 +6,13 @@ import com.example.healthcare_managment.entity.Patient;
 import com.example.healthcare_managment.repository.AppointmentRepository;
 import com.example.healthcare_managment.repository.DoctorRepository;
 import com.example.healthcare_managment.repository.PatientRepository;
+import com.example.healthcare_managment.security.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -43,7 +43,8 @@ public class AppointmentController {
     }
 
     @PostMapping("/add")
-    public String appointmentsAdd( @ModelAttribute Appointment appointment) {
+    public String appointmentsAdd(@ModelAttribute Appointment appointment,@AuthenticationPrincipal CurrentUser currentUser) {
+       appointment.setUser(currentUser.getUser());
         appointmentRepository.save(appointment);
         return "redirect:/appointments";
     }
