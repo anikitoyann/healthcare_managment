@@ -24,15 +24,12 @@ public class AppointmentController {
     private DoctorRepository doctorRepository;
     @Autowired
     private PatientRepository patientRepository;
-
-
     @GetMapping()
     public String appointmentsPage(ModelMap modelMap) {
         List<Appointment> all = appointmentRepository.findAll();
         modelMap.addAttribute("appointments", all);
         return "appointments";
     }
-
     @GetMapping("/add")
     public String appointmentsAddPage(ModelMap modelMap) {
         List<Doctor> all = doctorRepository.findAll();
@@ -41,19 +38,15 @@ public class AppointmentController {
         modelMap.addAttribute("patients", all1);
         return "addAppointments";
     }
-
     @PostMapping("/add")
     public String appointmentsAdd(@ModelAttribute Appointment appointment,@AuthenticationPrincipal CurrentUser currentUser) {
        appointment.setUser(currentUser.getUser());
         appointmentRepository.save(appointment);
         return "redirect:/appointments";
     }
-
     @GetMapping("/remove")
     public String removeAppointments(@RequestParam("id") int id) {
         appointmentRepository.deleteById(id);
         return "redirect:/appointments";
     }
-
-
 }
