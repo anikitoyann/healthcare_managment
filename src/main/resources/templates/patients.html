@@ -19,7 +19,7 @@
     <td th:text="${patient.id}"></td>
     <td th:text="${patient.name}"></td>
     <td th:text="${patient.surname}"></td>
-    <td th:text="${#dates.format(patient.dateOfBirthday, 'dd/MM/yyyy')}"></td>
+    <td th:text="${patient.dateOfBirthday}"></td>
     <td><a th:href="@{/patients/remove(id=${patient.id})}">Remove</a></td>
   </tr>
 </table>
