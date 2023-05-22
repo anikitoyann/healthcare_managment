@@ -1,5 +1,7 @@
 package com.example.healthcare_managment.controller;
 
+import com.example.healthcare_managment.entity.User;
+import com.example.healthcare_managment.entity.UserType;
 import com.example.healthcare_managment.security.CurrentUser;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,11 +23,24 @@ public class MainController {
     private String imageUploadPath;
 
     @GetMapping("/")
-    public String main(ModelMap modelMap, @AuthenticationPrincipal CurrentUser currentUser) {
-        if (currentUser != null) {
-            modelMap.addAttribute("user", currentUser.getUser());
-        }
+    public String main(){
         return "index";
+    }
+@GetMapping("/customLogin")
+    public String loginPage(){
+        return "customLoginPage";
+}
+    @GetMapping("/customSuccessLogin")
+    public String customSuccessLogin(@AuthenticationPrincipal CurrentUser currentUser) {
+        if (currentUser != null) {
+            User user = currentUser.getUser();
+            if(user.getUserType() == UserType.ADMIN){
+                return "redirect:/user/admin";
+            }else if(user.getUserType() == UserType.PATIENT || user.getUserType()==UserType.DOCTOR){
+                return "redirect:/";
+            }
+        }
+        return "redirect:/";
     }
 
     @GetMapping(value = "/getImage", produces = MediaType.IMAGE_JPEG_VALUE)

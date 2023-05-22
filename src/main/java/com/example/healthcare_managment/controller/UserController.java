@@ -35,10 +35,14 @@ public class UserController {
             String password = user.getPassword();
             String encodedPassword = passwordEncoder.encode(password);
             user.setPassword(encodedPassword);
-            user.setUserType(UserType.USER);
+            user.setUserType(UserType.PATIENT);
             userRepository.save(user);
         }
         return "redirect:/";
     }
-
+    @GetMapping("/admin")
+    public String adminPage(){
+        return "admin";
+    }
 }
+

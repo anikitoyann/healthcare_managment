@@ -1,52 +1,43 @@
 package com.example.healthcare_managment.controller;
 
 import com.example.healthcare_managment.entity.Appointment;
-import com.example.healthcare_managment.entity.Doctor;
-import com.example.healthcare_managment.entity.Patient;
-import com.example.healthcare_managment.repository.AppointmentRepository;
-import com.example.healthcare_managment.repository.DoctorRepository;
-import com.example.healthcare_managment.repository.PatientRepository;
 import com.example.healthcare_managment.security.CurrentUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.healthcare_managment.service.AppointmentService;
+import com.example.healthcare_managment.service.DoctorService;
+import com.example.healthcare_managment.service.PatientService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
+@RequiredArgsConstructor
 @Controller
 @RequestMapping("/appointments")
 public class AppointmentController {
-    @Autowired
-    private AppointmentRepository appointmentRepository;
-    @Autowired
-    private DoctorRepository doctorRepository;
-    @Autowired
-    private PatientRepository patientRepository;
+
+    private final AppointmentService appointmentService;
+    private final DoctorService doctorService;
+    private  final PatientService patientService;
     @GetMapping()
     public String appointmentsPage(ModelMap modelMap) {
-        List<Appointment> all = appointmentRepository.findAll();
-        modelMap.addAttribute("appointments", all);
+
+        modelMap.addAttribute("appointments", appointmentService.findAll());
         return "appointments";
     }
     @GetMapping("/add")
     public String appointmentsAddPage(ModelMap modelMap) {
-        List<Doctor> all = doctorRepository.findAll();
-        List<Patient> all1 = patientRepository.findAll();
-        modelMap.addAttribute("doctors", all);
-        modelMap.addAttribute("patients", all1);
+        modelMap.addAttribute("doctors", doctorService.findAll());
+        modelMap.addAttribute("patients", patientService.findAll());
         return "addAppointments";
     }
     @PostMapping("/add")
     public String appointmentsAdd(@ModelAttribute Appointment appointment,@AuthenticationPrincipal CurrentUser currentUser) {
-       appointment.setUser(currentUser.getUser());
-        appointmentRepository.save(appointment);
+       appointmentService.save(currentUser.getUser(),appointment);
         return "redirect:/appointments";
     }
     @GetMapping("/remove")
     public String removeAppointments(@RequestParam("id") int id) {
-        appointmentRepository.deleteById(id);
+        appointmentService.deleteById(id);
         return "redirect:/appointments";
     }
 }

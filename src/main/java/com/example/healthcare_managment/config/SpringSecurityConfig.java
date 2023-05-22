@@ -23,12 +23,23 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.GET,"/").permitAll()
                 .requestMatchers("/user/register").permitAll()
-                .requestMatchers("/doctors/remove").hasAuthority("ADMIN")
+                .requestMatchers("/user/admin").hasAnyAuthority("ADMIN")
+                .requestMatchers("/doctors/**").hasAnyAuthority("ADMIN","DOCTOR")
                 .requestMatchers("/patients/remove").hasAuthority("ADMIN")
-                .requestMatchers("/appointments/remove").hasAuthority("ADMIN")
+                .requestMatchers("/patients/add").hasAnyAuthority("ADMIN","PATIENT")
+                .requestMatchers("/appointments/remove").hasAnyAuthority("ADMIN","DOCTOR")
                 .anyRequest().authenticated()
                 .and()
-                .formLogin();
+                .formLogin()
+                .loginPage("/customLogin")
+                .defaultSuccessUrl("/customSuccessLogin")
+                .loginProcessingUrl("/login")
+                .permitAll()
+                .and()
+                .logout().permitAll()
+                .logoutSuccessUrl("/");
+
+
 
         return httpSecurity.build();
     }
