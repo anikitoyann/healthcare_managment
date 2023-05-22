@@ -30,8 +30,9 @@ public class DoctorServiceImpl implements DoctorService {
             File file = new File(imageUploadPath + fileName);
             multipartFile.transferTo(file);
             doctor.setImgName(fileName);
-            doctorRepository.save(doctor);
+
         }
+        doctorRepository.save(doctor);
     }
 
     @Override
